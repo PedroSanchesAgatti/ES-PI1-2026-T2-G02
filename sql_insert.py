@@ -1,13 +1,13 @@
 import mysql.connector
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="Henriquetutiya0906@",
-  database="Mydatabase"
+conexao = mysql.connector.connect(
+    host='localhost',
+    user='seu_usuario',
+    password='sua_senha',
+    database='seu_banco'
 )
 
-cursor = mydb.cursor()
+cursor = conexao.cursor()
 
 def inserir_eleitor(nome, cpf, titulo, mesario, chave_acesso):
     sql = """
