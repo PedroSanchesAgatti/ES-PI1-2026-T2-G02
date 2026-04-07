@@ -1,34 +1,45 @@
 inicio = ""
 while inicio != "3":
-    inicio=input("1:Votação\n2:gerenciamento\n3:sair\n")
+    print(f"\nInício")
+    print(f"\n----------------------------Sistema de Votação----------------------------------")
+    print("\n1-Votação\n2-gerenciamento\n3-sair\n")
+    inicio= input("Escolha a opção desejada:")
     match inicio:
         case "1":
             Votação=""
             while Votação!="4":
-                Votação=input("1:Auditoria\n2:Abrir sistema de votação\n3:Resultados\n4:Voltar\n")
+                print(f"\n----------------------------Votação---------------------------------------------")
+                print("\n1-Auditoria\n2-Abrir sistema de votação\n3-Resultados\n4-Voltar\n")
+                Votação=input("Escolha a opção desejada:")
                 match Votação:
                     case "1":
                         Auditoria=""
                         while Auditoria!="3":
-                            Auditoria=input("1:Protocolos de votação\n2:Logs de ocorrência\n3:Voltar\n")
+                            print(f"\n----------------------------Auditoria-------------------------------------------")
+                            print("\n1-Protocolos de votação\n2-Logs de ocorrência\n3-Voltar\n")
+                            Auditoria=input("Escolha a opção desejada:")
                             match Auditoria:
                                 case "1":
                                     pass
                                 case "2":
                                     pass
                                 case "3":
-                                    print("Voltando\n")
+                                    print("Voltando...\n")
                                 case _:
                                     print("Opção inválida\n")
                     case "2":
                         Abrir_sistema=""
                         while Abrir_sistema!="3":
-                            Abrir_sistema=input("1:Votar\n2:Encerrar sistema de votação\n3:Voltar\n")      
+                            print(f"\n------------------------------Sistema de Votação--------------------------------")
+                            print("\n1-Votar\n2-Encerrar sistema de votação\n3-Voltar\n")
+                            Abrir_sistema=input("Escolha a opção desejada:")      
                             match Abrir_sistema:
                                 case "1":
                                     Votar=""
                                     while Votar!="1":
-                                        Votar=input("1:Cancelar voto\n2:Confirmar voto\n")
+                                        print(f"\n----------------------------Votação---------------------------------------------")
+                                        print("\n1-Cancelar voto\n2-Confirmar voto\n")
+                                        Votar=input("Escolha a opção desejada:")
                                         match Votar:
                                             case "1":
                                                 print("Voto cancelado\n")
@@ -41,25 +52,29 @@ while inicio != "3":
                                 case "2":
                                     Encerrar="1"
                                     while Encerrar=="1":
-                                        Encerrar=input("1:Não encerrar\n2:Encerrar\n3:Voltar\n")
+                                        print(f"\n----------------------------Encerrar Votação------------------------------------")
+                                        print("\n1-Não encerrar\n2-Encerrar\n3-Voltar\n")
+                                        Encerrar=input("Escolha a opção desejada:")
                                         match Encerrar:
                                             case "1" :
                                                 print("Sistema de votação não encerrado\n")
                                             case "2":
-                                                print("Encerrando sistema de votação\n")
-                                                Abrir_sistema="3"  
+                                                print("Encerrando sistema de votação...\n")
+                                                Abrir_sistema=3  
                                             case "3":
-                                                print("Voltando\n")       
+                                                print("Voltando...\n")      
                                             case _:
                                                 print("Opção inválida\n")                  
                                 case "3":
-                                    print("Voltando\n")
+                                    print("Voltando...\n")
                                 case _:
                                     print("Opção inválida\n")                    
                     case "3":
                         Resultados=""
                         while Resultados!="5":
-                            Resultados=input("1:Boletim de urna\n2:Estatística de comparecimento\n3:Validação de integridade\n4:Votos por partido\n5:Voltar\n")
+                            print(f"\n----------------------------Resultados------------------------------------------")
+                            print("\n1-Boletim de urna\n2-Estatística de comparecimento\n3-Validação de integridade\n4-Votos por partido\n5-Voltar\n")
+                            Resultados=input("Escolha a opção desejada:")
                             match Resultados:
                                 case "1":
                                     pass
@@ -70,22 +85,26 @@ while inicio != "3":
                                 case "4":
                                     pass
                                 case "5":
-                                    print("Voltando\n")
+                                    print("Voltando...\n")
                                 case _:
                                     print("Opção inválida\n")
                     case "4":
-                       print("Voltando")
+                       print("Voltando...")
                     case _:
                         print("Opção inválida\n")
         case "2":
             Gerenciamento=""
             while Gerenciamento!="3":
-                Gerenciamento=input("1:Eleitores\n2:Candidatos\n3:Voltar\n")
+                print(f"\n----------------------------Gerenciamento---------------------------------------")
+                print("\n1-Eleitores\n2-Candidatos\n3-Voltar\n")
+                Gerenciamento=input("Escolha a opção desejada:")
                 match Gerenciamento:
                     case "1":
                         Eleitores=""
                         while Eleitores!="6":
-                            Eleitores=input("1:Remoção de eleitores\n2:Buscar eleitores\n3:Listagen de eleitores\n4:Editar dados de eleitores\n5:Cadastrar eleitores\n6:Voltar\n")
+                            print(f"\n----------------------------Eleitores-------------------------------------------")
+                            print("\n1-Remoção de eleitores\n2-Buscar eleitores\n3-Listagen de eleitores\n4-Editar dados de eleitores\n5-Cadastrar eleitores\n6-Voltar\n")
+                            Eleitores=input("Escolha a opção desejada:")
                             match Eleitores:
                                 case "1":
                                     pass
@@ -98,13 +117,15 @@ while inicio != "3":
                                 case "5":
                                     pass
                                 case "6":
-                                    print("Voltando\n")
+                                    print("Voltando...\n")
                                 case _:
                                     print("Opção inválida\n")
                     case "2":
                         Candidatos=""
                         while Candidatos!="6":
-                            Candidatos=input("1:Buscar candidato\n2:Cadastro de candidatos\n3:Editar dados de candidatos\n4:Remover candidato\n5:Listar candidatos\n6:Voltar\n")
+                            print(f"\n----------------------------Candidatos------------------------------------------")
+                            print("\n1-Buscar candidato\n2-Cadastro de candidatos\n3-Editar dados de candidatos\n4-Remover candidato\n5-Listar candidatos\n6-Voltar\n")
+                            Candidatos=input("Escolha a opção desejada:")
                             match Candidatos:
                                 case "1":
                                     pass
@@ -117,18 +138,14 @@ while inicio != "3":
                                 case "5":
                                     pass
                                 case "6":
-                                    print("Voltando")
+                                    print("Voltando...")
                                 case _:
                                     print("Opção inválida\n")
                     case "3":
-                        print("Voltando\n")
+                        print("Voltando...\n")
                     case _:
                         print("Opção inválida\n")
         case "3":
-            print("Saindo")
-        case _:
-            print("Opção inválida\n")
-        case "3":
-            print("Saindo")
+            print("Saindo...")
         case _:
             print("Opção inválida\n")
