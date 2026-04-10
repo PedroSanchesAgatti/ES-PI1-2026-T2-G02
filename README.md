@@ -34,7 +34,7 @@ O sistema opera via **linha de comando (CLI)**, priorizando o raciocínio lógic
 ## 👥 3. Integrantes do Grupo  
 
 - AMANDA DE SOUSA TOMAZ
-- HENRIQEU KENJI TUTIYA
+- HENRIQUE KENJI TUTIYA
 - JÚLIA ANDRADE GUARNIERI
 - LARISSA SOUZA QUITO SAMPAIO
 - PEDRO HENRIQUE SANCHES AGATTI GODOY
