@@ -1,49 +1,29 @@
-import mysql.connector
-from mysql.connector import Error
-
-# 1. Configuração Única da Conexão (Centralizada)
-db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': '@@PHSAg3474', # Usando a senha que você forneceu no dump
-    'database': 'pis'
-}
-
-try:
-    conexao = mysql.connector.connect(**db_config)
-    cursor = conexao.cursor()
-except Error as e:
-    print(f"ERRO DE CONEXÃO: {e}")
-    exit()
 
 def verificacaoCPF(cpf):
-    # 1. Verificações Matemáticas (Formato)
-    if len(cpf) != 11 or cpf == cpf[0] * 11:
+    if len(cpf) != 11:
         return False
+    if cpf == cpf[0] * 11:
+        return False
+    soma = 0
+    for i in range(9):
+        soma += int(cpf[i]) * (10 - i)
+    resto = (soma * 10) % 11
+    if resto == 10 or resto == 11:
+        resto = 0
+    digito1 = resto
+    
+    soma = 0
+    for i in range(10):
+        soma += int(cpf[i]) * (11 - i)
+    
+    resto = (soma * 10) % 11
+    if resto == 10 or resto == 11:
+        resto = 0
+    digito2 = resto
 
-    for i in range(9, 11):
-        valor = sum(int(cpf[num]) * ((i + 1) - num) for num in range(i))
-        digito = ((valor * 10) % 11) % 10
-        if digito != int(cpf[i]):
-            return False
-            
-    # 2. Verificação de Disponibilidade (Banco de Dados)
-    # Usamos a conexão global já estabelecida
-    try:
-        query = "SELECT id FROM eleitores WHERE cpf = %s"
-        cursor.execute(query, (cpf,))
-        resultado = cursor.fetchone()
-        
-        # Se encontrou resultado, o CPF JÁ ESTÁ cadastrado
-        if resultado is not None:
-            return "CADASTRADO" 
-                
-    except Error as e:
-        print(f"Erro ao consultar banco: {e}")
-        return False 
+    return digito1 == int(cpf[9]) and digito2 == int(cpf[10])
 
-    # Se chegou aqui, o CPF é válido e NÃO existe no banco
-    return True 
+    
 
 inicio = ""
 while inicio != "3":
