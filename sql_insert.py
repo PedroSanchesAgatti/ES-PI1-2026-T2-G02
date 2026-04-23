@@ -20,8 +20,23 @@ def inserir_eleitor(nome, cpf, titulo, mesario, chave_acesso):
     cursor.execute(sql, valores)
     conexao.commit()
     
-    print("Eleitor inserido com ID:", cursor.lastrowid)
+    print("Eleitor cadastrado com sucesso!")
 
+def buscar_eleitor(valor):
+    sql = """
+    SELECT id, nome, cpf, titulo, status_voto 
+    FROM eleitores
+    WHERE nome LIKE %s OR cpf = %s
+    """
+    
+    cursor.execute(sql, (f"%{valor}%", valor))
+    resultado = cursor.fetchall()
+
+    if resultado:
+        for id, nome, cpf, titulo, status in resultado:
+            print(f"ID: {id} | Nome: {nome} | CPF: {cpf} | Titulo: {titulo} | Votou: {status}")
+    else:
+        print("Nenhum eleitor encontrado.")
 
 def listar_eleitores():
     cursor.execute("SELECT id, nome, cpf, titulo, status_voto FROM eleitores")
@@ -37,7 +52,7 @@ def inserir_candidato(nome, numero, partido):
     cursor.execute(sql, valores)
     conexao.commit()
     
-    print("Candidato inserido com ID:", cursor.lastrowid)
+    print("Candidato cadastrado com sucesso!")
 
 
 def listar_candidatos():
@@ -79,9 +94,6 @@ def listar_votos():
         print(f"Eleitor: {eleitor} | Candidato: {candidato} | Data: {data}")
 
 
-listar_eleitores()
-listar_candidatos()
-
-
-cursor.close()
-conexao.close()
+def fechar_conexao():
+    cursor.close()
+    conexao.close()

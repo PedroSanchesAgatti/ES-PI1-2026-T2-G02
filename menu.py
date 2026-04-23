@@ -1,4 +1,7 @@
 
+from sql_insert import inserir_eleitor, listar_eleitores, buscar_eleitor, fechar_conexao
+
+
 def verificacaoCPF(cpf):
     if len(cpf) != 11:
         return False
@@ -134,14 +137,16 @@ while inicio != "3":
                             Eleitores=input("Escolha a opção desejada:")
                             match Eleitores:
                                 case "1":
-                                    pass
+                                    print("Remoção ainda não implementada\n")
                                 case "2":
-                                    pass
+                                    valor = input("Digite o nome ou CPF do eleitor para busca: ")
+                                    buscar_eleitor(valor)
                                 case "3":
-                                    pass
+                                    listar_eleitores()
                                 case "4":
-                                    pass
+                                    print("Edição ainda não implementada\n")
                                 case "5":
+                                    nome = input("Digite o nome do eleitor: ")
                                     cpf_digitado = input("Digite o CPF apenas números: ")
                                     cpf_limpo = ""
                                     for char in cpf_digitado:
@@ -152,6 +157,12 @@ while inicio != "3":
                                     
                                     if status_cpf == True:
                                         print(f"O CPF {cpf_digitado} é VÁLIDO e disponível para cadastro.")
+
+                                        titulo = input("Título: ")
+                                        mesario = input("Mesário (s/n): ").lower() == "s"
+                                        chave = input("Chave de acesso: ")
+                                        inserir_eleitor(nome, cpf_limpo, titulo, mesario, chave)
+    
                                     elif status_cpf == "CADASTRADO":
                                         print(f"ERRO: O CPF {cpf_digitado} já está cadastrado no sistema.")
                                     else:
@@ -191,7 +202,4 @@ while inicio != "3":
         case _:
             print("Opção inválida\n")
 
-# Fechar conexão ao sair
-if 'conexao' in locals() and conexao.is_connected():
-    cursor.close()
-    conexao.close()
+fechar_conexao()
