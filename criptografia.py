@@ -21,7 +21,7 @@ def criptografia(palavra):
         resultado+=lista[matrix[1][j]]
     if len(palavra)%2 ==1:
         resultado+="K"
-    print(resultado)
+    return resultado
 
 
 def multiplicacao_matrizes(matrix_1, matrix_2):
