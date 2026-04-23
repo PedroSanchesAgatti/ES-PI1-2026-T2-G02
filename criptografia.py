@@ -6,7 +6,7 @@ def multiplicacao_matrizes(matrix_1, matrix_2):
         linha = []
         for j in range(len(matrix_2[0])):
             soma = 0
-            for k in range(len(matrix_2)):
+            for k in range(len(matrix_1[0])):
                 soma += matrix_1[i][k] * matrix_2[k][j]
             linha.append(soma)
         resultado.append(linha)
