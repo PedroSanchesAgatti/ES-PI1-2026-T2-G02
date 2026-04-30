@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS sistema_votacao;
+USE sistema_votacao;
+
 CREATE TABLE eleitores (
 id INT AUTO_INCREMENT PRIMARY KEY,
 nome VARCHAR(100) NOT NULL,

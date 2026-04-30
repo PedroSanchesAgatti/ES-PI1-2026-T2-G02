@@ -1,5 +1,5 @@
 
-from sql_insert import inserir_eleitor, listar_eleitores, buscar_eleitor, fechar_conexao
+import sql_insert
 
 def validacaoTitulo(titulo):
     titulo2=str(titulo)
@@ -187,14 +187,21 @@ while inicio != "3":
                             Eleitores=input("Escolha a opção desejada:")
                             match Eleitores:
                                 case "1":
-                                    print("Remoção ainda não implementada\n")
+                                    id = int(input("Digite o ID do eleitor para remover: "))
+                                    sql_insert.remover_eleitor(id)
                                 case "2":
-                                    valor = input("Digite o nome ou CPF do eleitor para busca: ")
-                                    buscar_eleitor(valor)
+                                    valor = input("Digite o CPF ou título do eleitor para busca: ")
+                                    sql_insert.buscar_eleitor(valor)
                                 case "3":
-                                    listar_eleitores()
+                                    sql_insert.listar_eleitores()
                                 case "4":
-                                    print("Edição ainda não implementada\n")
+                                    id = int(input("ID do eleitor: "))
+                                    nome = input("Novo nome: ")
+                                    cpf = input("Novo CPF: ")
+                                    titulo = input("Novo título: ")
+                                    mesario = input("Mesário (s/n): ").lower() == "s"
+                                    sql_insert.editar_eleitor(id, nome, cpf, titulo, mesario)
+                                
                                 case "5":
                                     nome = input("Digite o nome do eleitor: ")
                                     cpf_digitado = input("Digite o CPF apenas números: ")
@@ -205,20 +212,23 @@ while inicio != "3":
                         
                                     status_cpf = verificacaoCPF(cpf_limpo)
                                     
-                                    if status_cpf == True:
-                                        print(f"O CPF {cpf_digitado} é VÁLIDO e disponível para cadastro.")
-                                        titulo=int(input("Título: "))
-                                        if not validacaoTitulo(titulo):
-                                            print(f"ERRO: O Título de Eleitor {titulo} é INVÁLIDO.")
-                                        elif verificar_titulo_eleitor(titulo):
-                                            print(f"ERRO: O Título de Eleitor {titulo} já está cadastrado.")
+                                    if status_cpf:
+                                        if sql_insert.verificar_cpf_existente(cpf_limpo):
+                                            print(f"ERRO: O CPF {cpf_digitado} já está cadastrado.")
                                         else:
-                                            mesario = input("Mesário (s/n): ").lower() == "s"
-                                            chave = input("Chave de acesso: ")
-                                            inserir_eleitor(nome, cpf_limpo, titulo, mesario, chave)
+                                            print(f"O CPF {cpf_digitado} é VÁLIDO e disponível para cadastro.")
+                                            titulo=int(input("Título: "))
+                                            
+                                            if not validacaoTitulo(titulo):
+                                                print(f"ERRO: O Título de Eleitor {titulo} é INVÁLIDO.")
+                                            
+                                            elif sql_insert.verificar_titulo_eleitor(titulo):
+                                                print(f"ERRO: O Título de Eleitor {titulo} já está cadastrado.")
+                                            else:
+                                                mesario = input("Mesário (s/n): ").lower() == "s"
+                                                chave = input("Chave de acesso: ")
+                                                sql_insert.inserir_eleitor(nome, cpf_limpo, titulo, mesario, chave)
     
-                                    elif status_cpf == "CADASTRADO":
-                                        print(f"ERRO: O CPF {cpf_digitado} já está cadastrado no sistema.")
                                     else:
                                         print(f"ERRO: O CPF {cpf_digitado} é INVÁLIDO.")
 
@@ -234,15 +244,24 @@ while inicio != "3":
                             Candidatos=input("Escolha a opção desejada:")
                             match Candidatos:
                                 case "1":
-                                    pass
+                                    valor = input("Digite nome ou número do candidato: ")
+                                    sql_insert.buscar_candidato(valor)
                                 case "2":
-                                    pass
+                                    nome = input("Nome: ")
+                                    numero = int(input("Número: "))
+                                    partido = input("Partido: ")
+                                    sql_insert.inserir_candidato(nome, numero, partido)
                                 case "3":
-                                    pass
+                                    id = int(input("ID do candidato a ser editado: "))
+                                    nome = input("Novo nome: ")
+                                    numero = int(input("Novo número: "))
+                                    partido = input("Novo partido: ")
+                                    sql_insert.editar_candidato(id, nome, numero, partido)
                                 case "4":
-                                    pass
+                                    id = int(input("ID do candidato a ser removido: "))
+                                    sql_insert.remover_candidato(id)
                                 case "5":
-                                    pass
+                                    sql_insert.listar_candidatos()
                                 case "6":
                                     print("Voltando...")
                                 case _:
@@ -256,4 +275,3 @@ while inicio != "3":
         case _:
             print("Opção inválida\n")
 
-fechar_conexao()
