@@ -197,30 +197,34 @@ while inicio != "3":
                                     print("Edição ainda não implementada\n")
                                 case "5":
                                     nome = input("Digite o nome do eleitor: ")
-                                    cpf_digitado = input("Digite o CPF apenas números: ")
-                                    cpf_limpo = ""
-                                    for char in cpf_digitado:
-                                        if char.isdigit():
-                                            cpf_limpo = cpf_limpo + char
-                        
-                                    status_cpf = verificacaoCPF(cpf_limpo)
-                                         
-                                    if status_cpf == True:
-                                        print(f"O CPF {cpf_digitado} é VÁLIDO e disponível para cadastro.")
-                                        titulo=int(input("Título: "))
-                                        if not validacaoTitulo(titulo):
-                                            print(f"ERRO: O Título de Eleitor {titulo} é INVÁLIDO.")
-                                        elif verificar_titulo_eleitor(titulo):
-                                            print(f"ERRO: O Título de Eleitor {titulo} já está cadastrado.")
+                                    if nome.find(" ")==-1:
+                                        print("\nNome inválido!")
+                                    
+                                    else:        
+                                        cpf_digitado = input("Digite o CPF apenas números: ")
+                                        cpf_limpo = ""
+                                        for char in cpf_digitado:
+                                            if char.isdigit():
+                                                cpf_limpo = cpf_limpo + char
+                            
+                                        status_cpf = verificacaoCPF(cpf_limpo)
+                                        
+                                        if status_cpf == True:
+                                            print(f"O CPF {cpf_digitado} é VÁLIDO e disponível para cadastro.")
+                                            titulo=int(input("Título: "))
+                                            if not validacaoTitulo(titulo):
+                                                print(f"ERRO: O Título de Eleitor {titulo} é INVÁLIDO.")
+                                            elif sql.verificar_titulo_eleitor(titulo):
+                                                print(f"ERRO: O Título de Eleitor {titulo} já está cadastrado.")
+                                            else:
+                                                mesario = input("Mesário (s/n): ").lower() == "s"
+                                                chave = nome[0].upper()+nome[1].upper()+nome[nome.find(" ")+1].upper()+str(random.randint(1000,9999))
+                                                sql.inserir_eleitor(nome, cpf_limpo, titulo, mesario, chave)
+        
+                                        elif status_cpf == "CADASTRADO":
+                                            print(f"ERRO: O CPF {cpf_digitado} já está cadastrado no sistema.")
                                         else:
-                                            mesario = input("Mesário (s/n): ").lower() == "s"
-                                            chave = input("Chave de acesso: ")
-                                            inserir_eleitor(nome, cpf_limpo, titulo, mesario, chave)
-    
-                                    elif status_cpf == "CADASTRADO":
-                                        print(f"ERRO: O CPF {cpf_digitado} já está cadastrado no sistema.")
-                                    else:
-                                        print(f"ERRO: O CPF {cpf_digitado} é INVÁLIDO.")
+                                            print(f"ERRO: O CPF {cpf_digitado} é INVÁLIDO.")
 
                                 case "6":
                                     print("Voltando...\n")
