@@ -1,5 +1,10 @@
 
 from sql_insert import inserir_eleitor, listar_eleitores, buscar_eleitor, verificar_titulo_eleitor, fechar_conexao
+import random
+import criptografia
+import mysql.connector
+import os
+import datetime
 
 def validacaoTitulo(titulo):
     titulo2=str(titulo)
