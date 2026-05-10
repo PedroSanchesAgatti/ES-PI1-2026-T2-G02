@@ -21,7 +21,7 @@ def criptografia(palavra):
     par=True
 
     if len(palavra) % 2 == 1:
-        palavra += lista[random.randint(0,35)]
+        palavra += "M"
         par=False
 
     for letra in palavra:
@@ -37,7 +37,7 @@ def criptografia(palavra):
         resultado+=lista[matrix[0][j]]
         resultado+=lista[matrix[1][j]]
     if par==False:
-        resultado += lista[random.randint(0,35)]
+        resultado += "G"
     return resultado
 
 
