@@ -110,12 +110,18 @@ while inicio != "3":
                     case "2":
                         Abrir_sistema=""
                         while Abrir_sistema!="3":
+                            if sql.votacao_esta_aberta() == False:
+                                sql.abrir_votacao()
+                            else:
+                                print("A votação já está aberta!")
                             print(f"\n------------------------------Sistema de Votação--------------------------------")
                             print("\n1-Votar\n2-Encerrar sistema de votação\n3-Voltar\n")
                             Abrir_sistema=input("Escolha a opção desejada:")      
                             match Abrir_sistema:
                                 case "1":
-                                    Votar=""
+                                    if sql.votacao_esta_aberta() == False:
+                                        print("\n❌ ERRO: A votação está FECHADA. Não é possível votar.\n")
+                                        break
                                     while Votar!="1":
                                         print(f"\n----------------------------Votação---------------------------------------------")
                                         print("\n1-Cancelar voto\n2-Confirmar voto\n")
@@ -129,8 +135,13 @@ while inicio != "3":
                                                 Abrir_sistema="3"
                                             case _:
                                                 print("Opção inválida\n")
+                                
                                 case "2":
-                                    Encerrar="1"
+                                    if sql.votacao_esta_aberta():
+                                        sql.encerrar_votacao()
+                                    else:
+                                        print("\n⚠ A votação já está encerrada!\n")
+        
                                     while Encerrar=="1":
                                         print(f"\n----------------------------Encerrar Votação------------------------------------")
                                         print("\n1-Não encerrar\n2-Encerrar\n3-Voltar\n")
