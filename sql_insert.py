@@ -62,6 +62,17 @@ def listar_candidatos():
         print(f"ID: {id} | Nome: {nome} | Numero: {numero} | Partido: {partido}")
 
 
+def excluir_eleitor(valor):
+    sql = """
+    DELETE FROM eleitores
+    WHERE cpf = %s or titulo = %s
+    """
+    cursor.execute(sql, (valor, valor))
+    conexao.commit()
+
+    print("\nEleitor deletado com sucesso!")
+
+
 def registrar_voto(id_eleitor, id_candidato, protocolo):
     sql = """
     INSERT INTO votos (id_eleitor, id_candidato, protocolo)
