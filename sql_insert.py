@@ -4,7 +4,7 @@ conexao = mysql.connector.connect(
     host='localhost',
     user='root',
     password='@@PHSAg3474',
-    database='PIteste'
+    database='PIteste2'
 )
 
 cursor = conexao.cursor()
@@ -130,4 +130,36 @@ def encerrar_votacao():
 def votacao_esta_aberta():
     cursor.execute("SELECT votacao_aberta FROM configuracao_votacao WHERE id = 1")
     return cursor.fetchone()[0]
+
+def registrar_log(tipo, descricao):
+    """
+    Registra um evento na tabela de logs.
+    Tipos sugeridos: \'ABERTURA\', \'ENCERRAMENTO\', \'SUCESSO\', \'ALERTA\'
+    """
+    sql = "INSERT INTO logs (tipo, descricao) VALUES (%s, %s)"
+    valores = (tipo, descricao)
+    cursor.execute(sql, valores)
+    conexao.commit()
+
+def listar_logs():
+    """
+    Retorna todos os logs registrados em ordem cronológica.
+    """
+    sql = "SELECT data_hora, tipo, descricao FROM logs ORDER BY data_hora ASC"
+    cursor.execute(sql)
+    return cursor.fetchall()
+
+def listar_protocolos_auditoria():
+    """
+    Retorna os protocolos de votação, juntamente com o nome do eleitor e a data/hora.
+    Os protocolos são ordenados pelo nome do eleitor.
+    """
+    sql = """
+    SELECT e.nome, v.protocolo, v.data_hora 
+    FROM votos v
+    JOIN eleitores e ON v.id_eleitor = e.id
+    ORDER BY e.nome ASC
+    """
+    cursor.execute(sql)
+    return cursor.fetchall()
 
