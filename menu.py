@@ -1,5 +1,5 @@
 import sql_insert
-from sql_insert import inserir_eleitor, listar_eleitores, buscar_eleitor, verificar_titulo_eleitor, fechar_conexao
+from sql_insert import inserir_eleitor, listar_eleitores, buscar_eleitor, verificar_titulo_eleitor, fechar_conexao, abrir_votacao, encerrar_votacao, votacao_esta_aberta
 import random
 import criptografia
 import mysql.connector
