@@ -1,4 +1,4 @@
-
+import sql.insert
 from sql_insert import inserir_eleitor, listar_eleitores, buscar_eleitor, verificar_titulo_eleitor, fechar_conexao
 import random
 import criptografia
@@ -203,7 +203,7 @@ while inicio != "3":
                             Eleitores=input("Escolha a opção desejada:")
                             match Eleitores:
                                 case "1":
-                                    print("Remoção ainda não implementada\n")
+                                    sql_insert.excluir_eleitor(input("Digite o CPF ou o Título de eleitor: "))
                                 case "2":
                                     valor = input("Digite o nome ou CPF do eleitor para busca: ")
                                     buscar_eleitor(valor)
