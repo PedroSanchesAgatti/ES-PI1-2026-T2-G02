@@ -153,7 +153,7 @@ while inicio != "3":
                                         Encerrar=input("Escolha a opção desejada:")
                                         match Encerrar:
                                             case "1" :
-                                                sql.excluir_eleitor(criptografia.criptografia(input("Digite o CPF ou o Título de eleitor: ")))
+                                                print("Ainda não implementado")
                                             case "2":
                                                 print("Encerrando sistema de votação...\n")
                                                 Abrir_sistema=3  
