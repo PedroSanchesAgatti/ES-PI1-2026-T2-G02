@@ -63,14 +63,14 @@ def listar_candidatos():
 
 
 def excluir_eleitor(valor):
+    if buscar_eleitor(valor)!=10:
+        print("\nEleitor deletado com sucesso!")
     sql = """
     DELETE FROM eleitores
     WHERE cpf = %s or titulo = %s
     """
-    cursor.execute(sql, (valor, valor))
+    cursor.execute(sql,(valor,valor))
     conexao.commit()
-
-    print("\nEleitor deletado com sucesso!")
 
 
 def registrar_voto(id_eleitor, id_candidato, protocolo):
