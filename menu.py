@@ -1,4 +1,4 @@
-import sql.insert
+import sql_insert
 from sql_insert import inserir_eleitor, listar_eleitores, buscar_eleitor, verificar_titulo_eleitor, fechar_conexao
 import random
 import criptografia
