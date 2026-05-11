@@ -116,3 +116,18 @@ def verificar_titulo_eleitor(titulo):
 def fechar_conexao():
     cursor.close()
     conexao.close()
+
+def abrir_votacao():
+    cursor.execute("UPDATE configuracao_votacao SET votacao_aberta = TRUE WHERE id = 1")
+    conexao.commit()
+    print("Votação aberta!")
+
+def encerrar_votacao():
+    cursor.execute("UPDATE configuracao_votacao SET votacao_aberta = FALSE WHERE id = 1")
+    conexao.commit()
+    print("Votação encerrada!")
+
+def votacao_esta_aberta():
+    cursor.execute("SELECT votacao_aberta FROM configuracao_votacao WHERE id = 1")
+    return cursor.fetchone()[0]
+

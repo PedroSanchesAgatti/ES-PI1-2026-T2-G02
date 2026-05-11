@@ -33,7 +33,15 @@ tipo VARCHAR(50) NOT NULL,
 descricao TEXT NOT NULL
 );
 
+CREATE TABLE configuracao_votacao (
+    id INT PRIMARY KEY,
+    votacao_aberta BOOLEAN NOT NULL
+);
+
+
 INSERTS:
+INSERT INTO configuracao_votacao VALUES (1, FALSE);
+
 INSERT INTO eleitores (nome, cpf, titulo, mesario, chave_acesso, status_voto) VALUES
 ('Ana Souza', 'CPF001', '0000000000001', TRUE, 'CHAVE001', TRUE),
 ('Bruno Lima', 'CPF002', '0000000000002', FALSE, 'CHAVE002', TRUE),
