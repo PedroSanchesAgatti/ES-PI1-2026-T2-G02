@@ -115,8 +115,8 @@ while inicio != "3":
                     case "2":
                         Abrir_sistema=""
                         while Abrir_sistema!="3":
-                            if sql.votacao_esta_aberta() == False:
-                                sql.abrir_votacao()
+                            if votacao_esta_aberta() == False:
+                                abrir_votacao()
                             else:
                                 print("A votação já está aberta!")
                             print(f"\n------------------------------Sistema de Votação--------------------------------")
@@ -124,16 +124,17 @@ while inicio != "3":
                             Abrir_sistema=input("Escolha a opção desejada:")      
                             match Abrir_sistema:
                                 case "1":
-                                    if sql.votacao_esta_aberta() == False:
+                                    if votacao_esta_aberta() == False:
                                         print("\n❌ ERRO: A votação está FECHADA. Não é possível votar.\n")
                                         break
-                                    while Votar!="1":
+                                    while votacao_esta_aberta():
                                         print(f"\n----------------------------Votação---------------------------------------------")
                                         print("\n1-Cancelar voto\n2-Confirmar voto\n")
                                         Votar=input("Escolha a opção desejada:")
                                         match Votar:
                                             case "1":
                                                 print("Voto cancelado\n")
+                                                break
                                             case "2":
                                                 print("Voto confirmado\n")
                                                 Votar="1"
@@ -142,12 +143,13 @@ while inicio != "3":
                                                 print("Opção inválida\n")
                                 
                                 case "2":
-                                    if sql.votacao_esta_aberta():
-                                        sql.encerrar_votacao()
+                                    if votacao_esta_aberta():
+                                        encerrar_votacao()
                                     else:
                                         print("\n⚠ A votação já está encerrada!\n")
-        
-                                    while Encerrar=="1":
+                                        break
+                                    Encerrar=""
+                                    while Encerrar!="3":
                                         print(f"\n----------------------------Encerrar Votação------------------------------------")
                                         print("\n1-Não encerrar\n2-Encerrar\n3-Voltar\n")
                                         Encerrar=input("Escolha a opção desejada:")
@@ -156,7 +158,7 @@ while inicio != "3":
                                                 print("Ainda não implementado")
                                             case "2":
                                                 print("Encerrando sistema de votação...\n")
-                                                Abrir_sistema=3  
+                                                Abrir_sistema="3"
                                             case "3":
                                                 print("Voltando...\n")      
                                             case _:
