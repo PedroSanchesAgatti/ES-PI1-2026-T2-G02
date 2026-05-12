@@ -26,10 +26,10 @@ def buscar_eleitor(valor):
     sql = """
     SELECT id, nome, cpf, titulo, status_voto 
     FROM eleitores
-    WHERE nome LIKE %s OR cpf = %s
+    WHERE titulo  %s OR cpf = %s
     """
     
-    cursor.execute(sql, (f"%{valor}%", valor))
+    cursor.execute(sql, (valor, valor))
     resultado = cursor.fetchall()
 
     if resultado:
