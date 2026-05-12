@@ -149,6 +149,21 @@ def verificao_mesarrio(cpf, chave):
 
     return cpf_db[:3] == cpf[:3] and chave_db == chave and mesario==1
 
-print(verificao_mesarrio(input(),input()))
+def verificao_votacao(cpf, chave):
+    sql = """
+    SELECT cpf, chave_acesso, status_voto
+    FROM eleitores
+    WHERE chave_acesso = %s
+    """
+
+    cursor.execute(sql, (chave,))
+    resultado = cursor.fetchone()
+
+    if resultado is None:
+        return False
+
+    cpf_db, chave_db, status = resultado
+
+    return cpf_db[:3] == cpf[:3] and chave_db == chave and status==0
 
 
