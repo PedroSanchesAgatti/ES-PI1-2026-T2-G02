@@ -1,10 +1,12 @@
 import mysql.connector
+import datetime
+import os
 
 conexao = mysql.connector.connect(
     host='localhost',
     user='root',
-    password='@@PHSAg3474',
-    database='PIteste'
+    password='Seppal1914#',
+    database='sistema_votacao'
 )
 
 cursor = conexao.cursor()
@@ -26,7 +28,7 @@ def buscar_eleitor(valor):
     sql = """
     SELECT id, nome, cpf, titulo, status_voto 
     FROM eleitores
-    WHERE titulo  %s OR cpf = %s
+    WHERE titulo = %s OR cpf = %s
     """
     
     cursor.execute(sql, (valor, valor))
@@ -63,14 +65,18 @@ def listar_candidatos():
 
 
 def excluir_eleitor(valor):
-    if buscar_eleitor(valor)!=10:
-        print("\nEleitor deletado com sucesso!")
     sql = """
     DELETE FROM eleitores
-    WHERE cpf = %s or titulo = %s
+    WHERE cpf = %s OR titulo = %s
     """
-    cursor.execute(sql,(valor,valor))
-    conexao.commit()
+
+    cursor.execute(sql, (valor, valor))
+
+    if cursor.rowcount > 0:
+        conexao.commit()
+        print("\nEleitor deletado com sucesso!")
+    else:
+        print("\nNenhum eleitor encontrado.")
 
 
 def registrar_voto(id_eleitor, id_candidato, protocolo):
@@ -78,18 +84,20 @@ def registrar_voto(id_eleitor, id_candidato, protocolo):
     INSERT INTO votos (id_eleitor, id_candidato, protocolo)
     VALUES (%s, %s, %s)
     """
-    
+
     valores = (id_eleitor, id_candidato, protocolo)
     cursor.execute(sql, valores)
-    
-    
+
     cursor.execute("""
-        UPDATE eleitores 
-        SET status_voto = TRUE 
+        UPDATE eleitores
+        SET status_voto = TRUE
         WHERE id = %s
     """, (id_eleitor,))
-    
+
     conexao.commit()
+
+    registrar_log("SUCESSO: Voto realizado com sucesso.")
+
     print("Voto registrado!")
 
 
@@ -120,11 +128,17 @@ def fechar_conexao():
 def abrir_votacao():
     cursor.execute("UPDATE configuracao_votacao SET votacao_aberta = TRUE WHERE id = 1")
     conexao.commit()
+
+    registrar_log("ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
+
     print("Votação aberta!")
 
 def encerrar_votacao():
     cursor.execute("UPDATE configuracao_votacao SET votacao_aberta = FALSE WHERE id = 1")
     conexao.commit()
+
+    registrar_log("ENCERRAMENTO: Votação finalizada com sucesso.")
+
     print("Votação encerrada!")
 
 def votacao_esta_aberta():
@@ -166,4 +180,35 @@ def verificao_votacao(cpf, chave):
 
     return cpf_db[:3] == cpf[:3] and chave_db == chave and status==0
 
+def registrar_log(mensagem):
+    data_hora = datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
 
+    with open("logs_ocorrencias.txt", "a", encoding="utf-8") as arquivo:
+        arquivo.write(f"{data_hora} {mensagem}\n")
+def exibir_logs():
+    if not os.path.exists("logs_ocorrencias.txt"):
+        print("Nenhum log encontrado.")
+        return
+
+    print("\n================ LOGS DE OCORRÊNCIAS ================\n")
+
+    with open("logs_ocorrencias.txt", "r", encoding="utf-8") as arquivo:
+        print(arquivo.read())
+def exibir_protocolos():
+    cursor.execute("""
+        SELECT protocolo
+        FROM votos
+        ORDER BY protocolo ASC
+    """)
+
+    resultados = cursor.fetchall()
+
+    print("\n================ PROTOCOLOS DE VOTAÇÃO ================\n")
+
+    if resultados:
+        for protocolo in resultados:
+            print(protocolo[0])
+    else:
+        print("Nenhum protocolo encontrado.")
+
+exibir_protocolos()
