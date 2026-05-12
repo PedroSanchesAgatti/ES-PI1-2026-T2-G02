@@ -131,3 +131,24 @@ def votacao_esta_aberta():
     cursor.execute("SELECT votacao_aberta FROM configuracao_votacao WHERE id = 1")
     return cursor.fetchone()[0]
 
+
+def verificao_mesarrio(cpf, chave):
+    sql = """
+    SELECT cpf, chave_acesso, mesario
+    FROM eleitores
+    WHERE chave_acesso = %s
+    """
+
+    cursor.execute(sql, (chave,))
+    resultado = cursor.fetchone()
+
+    if resultado is None:
+        return False
+
+    cpf_db, chave_db, mesario = resultado
+
+    return cpf_db[:3] == cpf[:3] and chave_db == chave and mesario==1
+
+print(verificao_mesarrio(input(),input()))
+
+
