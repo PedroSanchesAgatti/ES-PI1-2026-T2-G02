@@ -146,9 +146,9 @@ def votacao_esta_aberta():
     return cursor.fetchone()[0]
 
 
-def verificao_mesarrio(cpf, chave):
+def verificao_mesarrio(titulo,cpf, chave):
     sql = """
-    SELECT cpf, chave_acesso, mesario
+    SELECT titulo ,cpf, chave_acesso, mesario
     FROM eleitores
     WHERE chave_acesso = %s
     """
@@ -159,9 +159,9 @@ def verificao_mesarrio(cpf, chave):
     if resultado is None:
         return False
 
-    cpf_db, chave_db, mesario = resultado
+     titulo_db, cpf_db, chave_db, mesario = resultado
 
-    return cpf_db[:3] == cpf[:3] and chave_db == chave and mesario==1
+    return cpf_db[:3] == cpf[:3] and chave_db == chave and mesario==1 and titulo_db == titulo
 
 def verificao_votacao(cpf, chave):
     sql = """
