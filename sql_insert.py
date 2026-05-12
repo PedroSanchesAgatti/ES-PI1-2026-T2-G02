@@ -159,13 +159,13 @@ def verificao_mesarrio(titulo,cpf, chave):
     if resultado is None:
         return False
 
-     titulo_db, cpf_db, chave_db, mesario = resultado
+    titulo_db, cpf_db, chave_db, mesario = resultado
 
     return cpf_db[:3] == cpf[:3] and chave_db == chave and mesario==1 and titulo_db == titulo
 
-def verificao_votacao(cpf, chave):
+def verificao_votacao(titulo, cpf, chave):
     sql = """
-    SELECT cpf, chave_acesso, status_voto
+    SELECT titulo, cpf, chave_acesso, status_voto
     FROM eleitores
     WHERE chave_acesso = %s
     """
@@ -176,9 +176,9 @@ def verificao_votacao(cpf, chave):
     if resultado is None:
         return False
 
-    cpf_db, chave_db, status = resultado
+    titulo_db, cpf_db, chave_db, status = resultado
 
-    return cpf_db[:3] == cpf[:3] and chave_db == chave , status
+    return titulo_db == titulo and cpf_db[:3] == cpf[:3] and chave_db == chave , status
 
 def registrar_log(mensagem):
     data_hora = datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
