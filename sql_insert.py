@@ -164,6 +164,6 @@ def verificao_votacao(cpf, chave):
 
     cpf_db, chave_db, status = resultado
 
-    return cpf_db[:3] == cpf[:3] and chave_db == chave and status==0
+    return cpf_db[:3] == cpf[:3] and chave_db == chave , status
 
 
