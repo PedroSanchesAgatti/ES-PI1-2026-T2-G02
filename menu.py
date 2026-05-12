@@ -116,10 +116,11 @@ while inicio != "3":
                         Abrir_sistema=""
                         while Abrir_sistema!="3":
                             if votacao_esta_aberta() == False:
-                                cpf_mesario = input("Digite o CPF do mesário: ")
+                                titulo_mesario = input("Digite o título do mesário: ")
+                                cpf_mesario = input("Digite os 4 primeiros dígitos do CPF do mesário: ")
                                 chave_mesario = input("Digite a chave de acesso do mesário: ")
 
-                                if verificao_mesarrio(cpf_mesario, chave_mesario):
+                                if verificao_mesarrio(titulo_mesario, cpf_mesario, chave_mesario):
                                     abrir_votacao()
                                     print("\n✅ Votação aberta com sucesso!\n")
                                     registrar_log("ABERTURA: Votação aberta com sucesso.")
@@ -162,10 +163,10 @@ while inicio != "3":
                                 
                                 case "2":
                                     if votacao_esta_aberta():
-                                        cpf_mesario = input("Digite o CPF do mesário: ")
+                                        titulo_mesario = input("Digite o título do mesário: ")
+                                        cpf_mesario = input("Digite os 4 primeiros dígitos do CPF do mesário: ")
                                         chave_mesario = input("Digite a chave de acesso do mesário: ")
-
-                                        if verificao_mesarrio(cpf_mesario, chave_mesario):
+                                        if verificao_mesarrio(titulo_mesario, cpf_mesario, chave_mesario):
                                             encerrar_votacao()
                                             print("\n✅ Votação encerrada com sucesso!\n")
                                             registrar_log("ENCERRAMENTO: Votação encerrada com sucesso.")
