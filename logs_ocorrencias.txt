@@ -1,0 +1,8 @@
+[2026-05-12 10:31:35] oi
+[2026-05-12 10:59:14] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.
+[2026-05-12 10:59:14] ABERTURA: Votação aberta com sucesso.
+[2026-05-12 11:01:03] ENCERRAMENTO: Votação finalizada com sucesso.
+[2026-05-12 11:12:53] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.
+[2026-05-12 11:12:53] ABERTURA: Votação aberta com sucesso.
+[2026-05-12 11:13:16] ENCERRAMENTO: Votação finalizada com sucesso.
+[2026-05-12 11:13:16] ENCERRAMENTO: Votação encerrada com sucesso.

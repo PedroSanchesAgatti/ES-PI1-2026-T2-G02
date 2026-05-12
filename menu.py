@@ -1,5 +1,5 @@
 import sql_insert
-from sql_insert import inserir_eleitor, listar_eleitores, buscar_eleitor, verificar_titulo_eleitor, fechar_conexao, abrir_votacao, encerrar_votacao, votacao_esta_aberta
+from sql_insert import inserir_eleitor, verificao_mesarrio, registrar_voto, verificao_votacao, listar_candidatos,  encerrar_votacao, votacao_esta_aberta, registrar_log, exibir_logs, exibir_protocolos, listar_eleitores, buscar_eleitor, verificar_titulo_eleitor, fechar_conexao, abrir_votacao, encerrar_votacao, votacao_esta_aberta
 import random
 import criptografia
 import mysql.connector
@@ -105,9 +105,9 @@ while inicio != "3":
                             Auditoria=input("Escolha a opção desejada:")
                             match Auditoria:
                                 case "1":
-                                    pass
+                                    exibir_protocolos()
                                 case "2":
-                                    pass
+                                    exibir_logs()
                                 case "3":
                                     print("Voltando...\n")
                                 case _:
@@ -116,7 +116,17 @@ while inicio != "3":
                         Abrir_sistema=""
                         while Abrir_sistema!="3":
                             if votacao_esta_aberta() == False:
-                                abrir_votacao()
+                                cpf_mesario = input("Digite o CPF do mesário: ")
+                                chave_mesario = input("Digite a chave de acesso do mesário: ")
+
+                                if verificao_mesarrio(cpf_mesario, chave_mesario):
+                                    abrir_votacao()
+                                    print("\n✅ Votação aberta com sucesso!\n")
+                                    registrar_log("ABERTURA: Votação aberta com sucesso.")
+                                else:
+                                    print("\n❌ ERRO: Credenciais do mesário inválidas.\n")
+
+                                    registrar_log("ABERTURA: Tentativa de abertura de votação com credenciais inválidas.")
                             else:
                                 print("A votação já está aberta!")
                             print(f"\n------------------------------Sistema de Votação--------------------------------")
@@ -127,6 +137,14 @@ while inicio != "3":
                                     if votacao_esta_aberta() == False:
                                         print("\n❌ ERRO: A votação está FECHADA. Não é possível votar.\n")
                                         break
+                                    cpf = input("Digite o CPF do eleitor: ")
+                                    chave = input("Digite a chave de acesso do eleitor: ")
+
+                                    if not verificao_votacao(cpf, chave):
+                                        print("\n❌ ERRO: Credenciais do eleitor inválidas ou voto já registrado.\n")
+                                        registrar_log(f"VOTO: Tentativa de voto com credenciais inválidas ou voto já registrado para CPF {cpf}.")
+                                        break
+                                    listar_candidatos()
                                     while votacao_esta_aberta():
                                         print(f"\n----------------------------Votação---------------------------------------------")
                                         print("\n1-Cancelar voto\n2-Confirmar voto\n")
@@ -144,9 +162,16 @@ while inicio != "3":
                                 
                                 case "2":
                                     if votacao_esta_aberta():
-                                        encerrar_votacao()
-                                    else:
-                                        print("\n⚠ A votação já está encerrada!\n")
+                                        cpf_mesario = input("Digite o CPF do mesário: ")
+                                        chave_mesario = input("Digite a chave de acesso do mesário: ")
+
+                                        if verificao_mesarrio(cpf_mesario, chave_mesario):
+                                            encerrar_votacao()
+                                            print("\n✅ Votação encerrada com sucesso!\n")
+                                            registrar_log("ENCERRAMENTO: Votação encerrada com sucesso.")
+                                        else:
+                                            print("\n❌ ERRO: Credenciais do mesário inválidas.\n")
+                                            registrar_log("ENCERRAMENTO: Tentativa de encerramento de votação com credenciais inválidas.")
                                         break
                                     Encerrar=""
                                     while Encerrar!="3":
@@ -232,12 +257,12 @@ while inicio != "3":
                                             titulo=int(input("Título: "))
                                             if not validacaoTitulo(titulo):
                                                 print(f"ERRO: O Título de Eleitor {titulo} é INVÁLIDO.")
-                                            elif sql.verificar_titulo_eleitor(titulo):
+                                            elif verificar_titulo_eleitor(titulo):
                                                 print(f"ERRO: O Título de Eleitor {titulo} já está cadastrado.")
                                             else:
                                                 mesario = input("Mesário (s/n): ").lower() == "s"
                                                 chave = nome[0].upper()+nome[1].upper()+nome[nome.find(" ")+1].upper()+str(random.randint(1000,9999))
-                                                sql.inserir_eleitor(nome, cpf_limpo, titulo, mesario, chave)
+                                                inserir_eleitor(nome, cpf_limpo, titulo, mesario, chave)
         
                                         elif status_cpf == "CADASTRADO":
                                             print(f"ERRO: O CPF {cpf_digitado} já está cadastrado no sistema.")
