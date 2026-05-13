@@ -211,4 +211,3 @@ def exibir_protocolos():
     else:
         print("Nenhum protocolo encontrado.")
 
-exibir_protocolos()
