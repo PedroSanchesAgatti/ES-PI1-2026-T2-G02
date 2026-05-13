@@ -233,7 +233,7 @@ while inicio != "3":
                                 case "1":
                                     sql_insert.excluir_eleitor(input("Digite o CPF ou o Título de eleitor: "))
                                 case "2":
-                                    valor = input("Digite o nome ou CPF do eleitor para busca: ")
+                                    valor = input("Digite o título ou CPF do eleitor para busca: ")
                                     buscar_eleitor(valor)
                                 case "3":
                                     listar_eleitores()
