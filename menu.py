@@ -1,3 +1,5 @@
+#modularizar e organizar os imports
+
 import sql_insert
 from sql_insert import inserir_eleitor, verificao_mesarrio, registrar_voto, verificao_votacao, listar_candidatos,  encerrar_votacao, votacao_esta_aberta, registrar_log, exibir_logs, exibir_protocolos, listar_eleitores, buscar_eleitor, verificar_titulo_eleitor, fechar_conexao, abrir_votacao, encerrar_votacao, votacao_esta_aberta
 import random
@@ -126,7 +128,7 @@ while inicio != "3":
                                     registrar_log("ABERTURA: Votação aberta com sucesso.")
                                 else:
                                     print("\n❌ ERRO: Credenciais do mesário inválidas.\n")
-
+#fazer a zerezima
                                     registrar_log("ABERTURA: Tentativa de abertura de votação com credenciais inválidas.")
                             else:
                                 print("A votação já está aberta!")
@@ -147,6 +149,7 @@ while inicio != "3":
                                         break
                                     listar_candidatos()
                                     while votacao_esta_aberta():
+                                        #fazer
                                         print(f"\n----------------------------Votação---------------------------------------------")
                                         print("\n1-Cancelar voto\n2-Confirmar voto\n")
                                         Votar=input("Escolha a opção desejada:")
@@ -160,7 +163,7 @@ while inicio != "3":
                                                 Abrir_sistema="3"
                                             case _:
                                                 print("Opção inválida\n")
-                                
+                                #confirmação se vai encerrar
                                 case "2":
                                     if votacao_esta_aberta():
                                         titulo_mesario = input("Digite o título do mesário: ")
@@ -238,6 +241,7 @@ while inicio != "3":
                                 case "3":
                                     listar_eleitores()
                                 case "4":
+                                 #fazer
                                     print("Edição ainda não implementada\n")
                                 case "5":
                                     nome = input("Digite o nome do eleitor: ")
@@ -252,7 +256,7 @@ while inicio != "3":
                                                 cpf_limpo = cpf_limpo + char
                             
                                         status_cpf = verificacaoCPF(cpf_limpo)
-                                        
+                                        #botar o while
                                         if status_cpf == True:
                                             print(f"O CPF {cpf_digitado} é VÁLIDO e disponível para cadastro.")
                                             titulo=int(input("Título: "))
